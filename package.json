@@ -21,7 +21,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "stylelint": "stylelint src/**/*.css",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x} && npm run stylelint",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -56,6 +57,8 @@
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
+    "stylelint": "^14.13.0",
+    "stylelint-config-standard": "^28.0.0",
     "typescript": "^4.8.4"
   }
 }
