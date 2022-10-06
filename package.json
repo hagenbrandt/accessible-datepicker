@@ -22,6 +22,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
     "stylelint": "stylelint src/**/*.css",
+    "htmlhint": "htmlhint ./build/**/*.html",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x} && npm run stylelint",
     "prepare": "husky install"
   },
@@ -54,6 +55,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "htmlhint": "^1.1.4",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
