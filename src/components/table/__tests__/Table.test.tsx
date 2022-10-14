@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Table } from '../Table';
+import { renderTableCell, Table } from '../Table';
 
 describe('table', () => {
   const head = 'Head 1';
@@ -36,5 +36,41 @@ describe('table', () => {
     expect(screen.getByRole('rowgroup', { name: bodyTitle })).toBeInTheDocument();
     expect(screen.getByRole('row', { name: bodyRowTitle })).toBeInTheDocument();
     expect(screen.getByRole('cell', { name: cell })).toBeInTheDocument();
+  });
+});
+
+describe('renderTableCell', () => {
+  const cellContent = 'Cell Content 1';
+  const tableWrapperWithHeaderCell = (
+    <table>
+      <thead>
+        <tr>{renderTableCell(cellContent, 'headerCell')}</tr>
+      </thead>
+    </table>
+  );
+  const tableWrapperWithDataCell = (
+    <table>
+      <tbody>
+        <tr>{renderTableCell(cellContent, 'dataCell')}</tr>
+      </tbody>
+    </table>
+  );
+
+  it('renders a columnheader with given string', () => {
+    render(tableWrapperWithHeaderCell);
+
+    expect(screen.getByRole('columnheader')).toHaveTextContent(cellContent);
+  });
+
+  it('renders a data cell with given content', () => {
+    render(tableWrapperWithDataCell);
+
+    expect(screen.getByRole('cell')).toHaveTextContent(cellContent);
+  });
+
+  it('returns empty tag when no data is given', () => {
+    const { container } = render(renderTableCell('', 'headerCell'));
+
+    expect(container).toBeEmptyDOMElement();
   });
 });
