@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { renderTableCell, Table } from '../Table';
+import { renderTableCell, renderTableRow, Table } from '../Table';
 
 describe('table', () => {
   const head = 'Head 1';
@@ -44,14 +44,14 @@ describe('renderTableCell', () => {
   const tableWrapperWithHeaderCell = (
     <table>
       <thead>
-        <tr>{renderTableCell(cellContent, 'headerCell')}</tr>
+        <tr>{renderTableCell(cellContent, 'headerCell', 1)}</tr>
       </thead>
     </table>
   );
   const tableWrapperWithDataCell = (
     <table>
       <tbody>
-        <tr>{renderTableCell(cellContent, 'dataCell')}</tr>
+        <tr>{renderTableCell(cellContent, 'dataCell', 2)}</tr>
       </tbody>
     </table>
   );
@@ -71,6 +71,55 @@ describe('renderTableCell', () => {
   it('returns empty tag when no data is given', () => {
     const { container } = render(renderTableCell('', 'headerCell'));
 
+    expect(container).toBeEmptyDOMElement();
+  });
+});
+
+describe('renderTableRow', () => {
+  const tableRowTitle = 'Table Row Title';
+  const cellItems = ['Item 1', 'Item 2', 'Item 3'];
+  const headerRowKey = 'Head-Key-1';
+  const dataRowKey = 'Data-Key-1';
+
+  const tableRowWithHeaderCells = (
+    <table>
+      <thead>{renderTableRow(tableRowTitle, cellItems, 'headerCell', headerRowKey)}</thead>
+    </table>
+  );
+  const tableRowWithDataCells = (
+    <table>
+      <thead>{renderTableRow(tableRowTitle, cellItems, 'dataCell', dataRowKey)}</thead>
+    </table>
+  );
+
+  it('renders a table row with header cells', () => {
+    render(tableRowWithHeaderCells);
+
+    expect(screen.getAllByRole('columnheader')).toHaveLength(cellItems.length);
+    cellItems.forEach((item, index) => {
+      expect(screen.getByRole('columnheader', { name: item })).toHaveTextContent(cellItems[index]);
+    });
+  });
+
+  it('renders a table row with data cells', () => {
+    render(tableRowWithDataCells);
+
+    expect(screen.getAllByRole('cell')).toHaveLength(cellItems.length);
+    cellItems.forEach((item, index) => {
+      expect(screen.getByRole('cell', { name: item })).toHaveTextContent(cellItems[index]);
+    });
+  });
+
+  it('table row has a title with given content', () => {
+    render(tableRowWithHeaderCells);
+
+    expect(screen.getByRole('row')).toHaveAttribute('title', tableRowTitle);
+  });
+
+  it('returns empty tag when no data is given', () => {
+    const { container } = render(
+      renderTableRow(tableRowTitle, [], 'dataCell', 'Key-For-Empty-Row'),
+    );
     expect(container).toBeEmptyDOMElement();
   });
 });
