@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { renderTableCell, renderTableRow, Table } from '../Table';
+import { makeSnapshotTest } from '../../../helper/testHelper';
 
 describe('table', () => {
   const head = 'Head 1';
@@ -37,6 +38,8 @@ describe('table', () => {
     expect(screen.getByRole('row', { name: bodyRowTitle })).toBeInTheDocument();
     expect(screen.getByRole('cell', { name: cell })).toBeInTheDocument();
   });
+
+  makeSnapshotTest(component, 'table');
 });
 
 describe('renderTableCell', () => {
@@ -73,6 +76,9 @@ describe('renderTableCell', () => {
 
     expect(container).toBeEmptyDOMElement();
   });
+
+  makeSnapshotTest(tableWrapperWithHeaderCell, 'columnheader');
+  makeSnapshotTest(tableWrapperWithDataCell, 'cell');
 });
 
 describe('renderTableRow', () => {
@@ -122,4 +128,7 @@ describe('renderTableRow', () => {
     );
     expect(container).toBeEmptyDOMElement();
   });
+
+  makeSnapshotTest(tableRowWithHeaderCells, 'table');
+  makeSnapshotTest(tableRowWithDataCells, 'table');
 });
