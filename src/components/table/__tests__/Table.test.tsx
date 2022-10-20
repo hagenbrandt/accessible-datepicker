@@ -48,7 +48,7 @@ describe('TableCell', () => {
     <table>
       <thead>
         <tr>
-          <TableCell data={cellContent} cellType="headerCell" key={1} />
+          <TableCell data={cellContent} cellType="headerCell" cellKey={1} />
         </tr>
       </thead>
     </table>
@@ -57,7 +57,7 @@ describe('TableCell', () => {
     <table>
       <tbody>
         <tr>
-          <TableCell data={cellContent} cellType="dataCell" key={2} />
+          <TableCell data={cellContent} cellType="dataCell" cellKey={2} />
         </tr>
       </tbody>
     </table>
@@ -98,7 +98,7 @@ describe('TableRow', () => {
           tableRowTitle={tableRowTitle}
           cellItems={cellItems}
           rowType="headerCell"
-          key={headerRowKey}
+          rowKey={headerRowKey}
         />
       </thead>
     </table>
@@ -110,7 +110,7 @@ describe('TableRow', () => {
           tableRowTitle={tableRowTitle}
           cellItems={cellItems}
           rowType="dataCell"
-          key={dataRowKey}
+          rowKey={dataRowKey}
         />
       </thead>
     </table>
@@ -146,7 +146,7 @@ describe('TableRow', () => {
         tableRowTitle={tableRowTitle}
         cellItems={[]}
         rowType="dataCell"
-        key="Key-For-Empty-Row"
+        rowKey="Key-For-Empty-Row"
       />,
     );
     expect(container).toBeEmptyDOMElement();

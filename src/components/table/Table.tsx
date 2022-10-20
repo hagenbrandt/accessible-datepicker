@@ -12,13 +12,13 @@ type TableRowType = {
   tableRowTitle: string;
   cellItems: string[];
   rowType: CellType;
-  key?: string;
+  rowKey?: string;
 };
 
 type TableCellType = {
   data: string;
   cellType: CellType;
-  key?: number;
+  cellKey?: number;
 };
 
 export type CellType = 'headerCell' | 'dataCell';
@@ -27,42 +27,48 @@ export const Table = ({ head, headerRowTitle, bodyTitle, bodyRowTitle, cell }: T
   return (
     <table>
       <thead title={headerRowTitle}>
-        <tr title={headerRowTitle}>
-          <th>{head}</th>
-        </tr>
+        <TableRow
+          tableRowTitle={headerRowTitle}
+          cellItems={[head]}
+          rowType="headerCell"
+          rowKey="header-row-1"
+        />
       </thead>
       <tbody title={bodyTitle}>
-        <tr title={bodyRowTitle}>
-          <td>{cell}</td>
-        </tr>
+        <TableRow
+          tableRowTitle={bodyRowTitle}
+          cellItems={[cell]}
+          rowType="dataCell"
+          rowKey="body-row-key-1"
+        />
       </tbody>
     </table>
   );
 };
 
-export const TableCell = ({ data, cellType, key }: TableCellType) => {
+export const TableCell = ({ data, cellType, cellKey }: TableCellType) => {
   if (!data) {
     return <></>;
   }
 
-  const cellKey = key ? `${data}-${key}` : data;
+  const keyForCell = cellKey ? `${data}-${cellKey}` : data;
 
   if (cellType === 'headerCell') {
-    return <th key={cellKey}>{data}</th>;
+    return <th key={keyForCell}>{data}</th>;
   }
 
-  return <td key={cellKey}>{data}</td>;
+  return <td key={keyForCell}>{data}</td>;
 };
 
-export const TableRow = ({ tableRowTitle, cellItems, rowType, key }: TableRowType) => {
+export const TableRow = ({ tableRowTitle, cellItems, rowType, rowKey }: TableRowType) => {
   if (!cellItems.length) {
     return <></>;
   }
 
-  const rowKey = key ? `${rowType}-${key}` : rowType;
+  const keyForRow = rowKey ? `${rowType}-${rowKey}` : rowType;
 
   return (
-    <tr title={tableRowTitle} key={rowKey}>
+    <tr title={tableRowTitle} key={keyForRow}>
       {cellItems.map((item, index) => {
         return <TableCell data={item} cellType={rowType} key={index} />;
       })}
