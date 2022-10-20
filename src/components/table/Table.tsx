@@ -8,6 +8,19 @@ type TableType = {
   cell: string;
 };
 
+type TableRowType = {
+  tableRowTitle: string;
+  cellItems: string[];
+  rowType: CellType;
+  key?: string;
+};
+
+type TableCellType = {
+  data: string;
+  cellType: CellType;
+  key?: number;
+};
+
 export type CellType = 'headerCell' | 'dataCell';
 
 export const Table = ({ head, headerRowTitle, bodyTitle, bodyRowTitle, cell }: TableType) => {
@@ -27,7 +40,7 @@ export const Table = ({ head, headerRowTitle, bodyTitle, bodyRowTitle, cell }: T
   );
 };
 
-export const renderTableCell = (data: string, cellType: CellType, key?: number) => {
+export const TableCell = ({ data, cellType, key }: TableCellType) => {
   if (!data) {
     return <></>;
   }
@@ -41,12 +54,7 @@ export const renderTableCell = (data: string, cellType: CellType, key?: number) 
   return <td key={cellKey}>{data}</td>;
 };
 
-export const renderTableRow = (
-  tableRowTitle: string,
-  cellItems: string[],
-  rowType: CellType,
-  key?: string,
-) => {
+export const TableRow = ({ tableRowTitle, cellItems, rowType, key }: TableRowType) => {
   if (!cellItems.length) {
     return <></>;
   }
@@ -56,7 +64,7 @@ export const renderTableRow = (
   return (
     <tr title={tableRowTitle} key={rowKey}>
       {cellItems.map((item, index) => {
-        return renderTableCell(item, rowType, index);
+        return <TableCell data={item} cellType={rowType} key={index} />;
       })}
     </tr>
   );

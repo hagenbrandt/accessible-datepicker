@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { renderTableCell, renderTableRow, Table } from '../Table';
+import { TableCell, TableRow, Table } from '../Table';
 import { makeSnapshotTest } from '../../../helper/testHelper';
 
 describe('table', () => {
@@ -42,19 +42,23 @@ describe('table', () => {
   makeSnapshotTest(component, 'table');
 });
 
-describe('renderTableCell', () => {
+describe('TableCell', () => {
   const cellContent = 'Cell Content 1';
   const tableWrapperWithHeaderCell = (
     <table>
       <thead>
-        <tr>{renderTableCell(cellContent, 'headerCell', 1)}</tr>
+        <tr>
+          <TableCell data={cellContent} cellType="headerCell" key={1} />
+        </tr>
       </thead>
     </table>
   );
   const tableWrapperWithDataCell = (
     <table>
       <tbody>
-        <tr>{renderTableCell(cellContent, 'dataCell', 2)}</tr>
+        <tr>
+          <TableCell data={cellContent} cellType="dataCell" key={2} />
+        </tr>
       </tbody>
     </table>
   );
@@ -72,7 +76,7 @@ describe('renderTableCell', () => {
   });
 
   it('returns empty tag when no data is given', () => {
-    const { container } = render(renderTableCell('', 'headerCell'));
+    const { container } = render(<TableCell data={''} cellType="headerCell" />);
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -81,7 +85,7 @@ describe('renderTableCell', () => {
   makeSnapshotTest(tableWrapperWithDataCell, 'cell');
 });
 
-describe('renderTableRow', () => {
+describe('TableRow', () => {
   const tableRowTitle = 'Table Row Title';
   const cellItems = ['Item 1', 'Item 2', 'Item 3'];
   const headerRowKey = 'Head-Key-1';
@@ -89,12 +93,26 @@ describe('renderTableRow', () => {
 
   const tableRowWithHeaderCells = (
     <table>
-      <thead>{renderTableRow(tableRowTitle, cellItems, 'headerCell', headerRowKey)}</thead>
+      <thead>
+        <TableRow
+          tableRowTitle={tableRowTitle}
+          cellItems={cellItems}
+          rowType="headerCell"
+          key={headerRowKey}
+        />
+      </thead>
     </table>
   );
   const tableRowWithDataCells = (
     <table>
-      <thead>{renderTableRow(tableRowTitle, cellItems, 'dataCell', dataRowKey)}</thead>
+      <thead>
+        <TableRow
+          tableRowTitle={tableRowTitle}
+          cellItems={cellItems}
+          rowType="dataCell"
+          key={dataRowKey}
+        />
+      </thead>
     </table>
   );
 
@@ -124,7 +142,12 @@ describe('renderTableRow', () => {
 
   it('returns empty tag when no data is given', () => {
     const { container } = render(
-      renderTableRow(tableRowTitle, [], 'dataCell', 'Key-For-Empty-Row'),
+      <TableRow
+        tableRowTitle={tableRowTitle}
+        cellItems={[]}
+        rowType="dataCell"
+        key="Key-For-Empty-Row"
+      />,
     );
     expect(container).toBeEmptyDOMElement();
   });

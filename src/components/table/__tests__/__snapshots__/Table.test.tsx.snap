@@ -1,5 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TableCell matches snapshot 1`] = `
+<th>
+  Cell Content 1
+</th>
+`;
+
+exports[`TableCell matches snapshot 2`] = `
+<td>
+  Cell Content 1
+</td>
+`;
+
+exports[`TableRow matches snapshot 1`] = `
+<table>
+  <thead>
+    <tr
+      title="Table Row Title"
+    >
+      <th>
+        Item 1
+      </th>
+      <th>
+        Item 2
+      </th>
+      <th>
+        Item 3
+      </th>
+    </tr>
+  </thead>
+</table>
+`;
+
+exports[`TableRow matches snapshot 2`] = `
+<table>
+  <thead>
+    <tr
+      title="Table Row Title"
+    >
+      <td>
+        Item 1
+      </td>
+      <td>
+        Item 2
+      </td>
+      <td>
+        Item 3
+      </td>
+    </tr>
+  </thead>
+</table>
+`;
+
 exports[`renderTableCell matches snapshot 1`] = `
 <th>
   Cell Content 1
