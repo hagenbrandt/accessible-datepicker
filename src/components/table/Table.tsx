@@ -16,7 +16,7 @@ type TableRowType = {
 };
 
 type TableCellType = {
-  data: string;
+  data: string | JSX.Element;
   cellType: CellType;
   cellKey?: number;
 };
@@ -51,7 +51,9 @@ export const TableCell = ({ data, cellType, cellKey }: TableCellType) => {
     return <></>;
   }
 
-  const keyForCell = cellKey ? `${data}-${cellKey}` : data;
+  const isDataString = typeof data === 'string';
+  const keyForCell =
+    isDataString && cellKey ? `${data}-${cellKey}` : Math.floor(Math.random() * 100);
 
   if (cellType === 'headerCell') {
     return <th key={keyForCell}>{data}</th>;
@@ -59,6 +61,8 @@ export const TableCell = ({ data, cellType, cellKey }: TableCellType) => {
 
   return <td key={keyForCell}>{data}</td>;
 };
+
+export const ButtonTableCell = () => {};
 
 export const TableRow = ({ tableRowTitle, cellItems, rowType, rowKey }: TableRowType) => {
   if (!cellItems.length) {

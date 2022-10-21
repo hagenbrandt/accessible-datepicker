@@ -44,6 +44,7 @@ describe('table', () => {
 
 describe('TableCell', () => {
   const cellContent = 'Cell Content 1';
+  const button = <button>Push</button>;
   const tableWrapperWithHeaderCell = (
     <table>
       <thead>
@@ -58,6 +59,15 @@ describe('TableCell', () => {
       <tbody>
         <tr>
           <TableCell data={cellContent} cellType="dataCell" cellKey={2} />
+        </tr>
+      </tbody>
+    </table>
+  );
+  const tableCellWithButton = (
+    <table>
+      <tbody>
+        <tr>
+          <TableCell data={button} cellType="dataCell" cellKey={2} />
         </tr>
       </tbody>
     </table>
@@ -79,6 +89,12 @@ describe('TableCell', () => {
     const { container } = render(<TableCell data={''} cellType="headerCell" />);
 
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it('returns data cell with button element', () => {
+    render(tableCellWithButton);
+
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
   makeSnapshotTest(tableWrapperWithHeaderCell, 'columnheader');

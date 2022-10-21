@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { HtmlRole } from '../types/type';
 
-// eslint-disable-next-line jest/no-export, no-undef
+// eslint-disable-next-line jest/no-export
 export const makeSnapshotTest = (component: JSX.Element, roleQuery?: HtmlRole) => {
   it('matches snapshot', () => {
     cleanup();

@@ -30,7 +30,8 @@ module.exports = {
         'space-before-blocks': 'error',
         'import/prefer-default-export': 'off',
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "no-undef": 0,
     },
     settings: {
         react: {
