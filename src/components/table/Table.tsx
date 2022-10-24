@@ -1,4 +1,7 @@
 import React from 'react';
+import { Button, ButtonType } from '../button/Button';
+
+type ButttonTableCellType = ButtonType & Pick<TableCellType, 'cellKey'>;
 
 type TableType = {
   head: string;
@@ -62,7 +65,19 @@ export const TableCell = ({ data, cellType, cellKey }: TableCellType) => {
   return <td key={keyForCell}>{data}</td>;
 };
 
-export const ButtonTableCell = () => {};
+export const ButtonTableCell = (props: ButttonTableCellType) => {
+  const cellType = 'dataCell' as CellType;
+  const button = (
+    <Button
+      buttonText={props.buttonText}
+      buttonValue={props.buttonValue}
+      isDisabled={props.isDisabled ?? false}
+      onClick={props.onClick}
+    />
+  );
+
+  return <TableCell data={button} cellType={cellType} cellKey={props.cellKey} />;
+};
 
 export const TableRow = ({ tableRowTitle, cellItems, rowType, rowKey }: TableRowType) => {
   if (!cellItems.length) {

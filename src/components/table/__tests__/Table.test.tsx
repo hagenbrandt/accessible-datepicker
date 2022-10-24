@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { TableCell, TableRow, Table } from '../Table';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { TableCell, TableRow, Table, ButtonTableCell } from '../Table';
 import { makeSnapshotTest } from '../../../helper/testHelper';
 
 describe('table', () => {
@@ -170,4 +170,42 @@ describe('TableRow', () => {
 
   makeSnapshotTest(tableRowWithHeaderCells, 'table');
   makeSnapshotTest(tableRowWithDataCells, 'table');
+});
+
+describe('ButtonTableCell', () => {
+  const buttonText = 'Push';
+  const buttonValue = '42';
+  const mockClick = jest.fn();
+  const cellKey = 1;
+
+  const component = (
+    <table>
+      <tbody>
+        <tr>
+          <ButtonTableCell
+            buttonText={buttonText}
+            buttonValue={buttonValue}
+            isDisabled={false}
+            onClick={mockClick}
+            cellKey={cellKey}
+          />
+        </tr>
+      </tbody>
+    </table>
+  );
+
+  it('renders a button within a table data cell', () => {
+    render(component);
+
+    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('cell')).toBeInTheDocument();
+  });
+
+  it('calls a function on button click', () => {
+    render(component);
+    const button = screen.getByRole('button');
+    fireEvent.click(button);
+
+    expect(mockClick).toHaveBeenCalled();
+  });
 });
